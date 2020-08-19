@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SqlStrings>
+  <SqlString>
+    <Function>TO_CONVERT</Function>
+    <Sql>SELECT Beleg_ID, Seiten, Ablagecode FROM Dyn_Beleg WHERE OriginalFileName is null and Ablagecode not like '999999:\'</Sql>
+  </SqlString>
+  <SqlString>
+    <Function>RECOVER_ORIGINAL</Function>
+    <Sql>SELECT Top 10 Beleg_ID, Seiten, Ablagecode FROM Dyn_Beleg WHERE OriginalFileName is not null and Ablagecode not like '999999:\' and Erfassungsdatum >= '2018-12-14'</Sql>
+  </SqlString>
+  <SqlString>
+    <Function>CHECK_DATA</Function>
+    <Sql>SELECT Top 10 Beleg_ID, Seiten, Ablagecode FROM Dyn_Beleg WHERE OriginalFileName is null and Ablagecode not like '999999:\'</Sql>
+  </SqlString>
+  <SqlString>
+    <Function>CHECK_DATA_WIHTOUT_ORIGINAL</Function>
+    <Sql>SELECT Top 10 Beleg_ID, Seiten, Ablagecode FROM Dyn_Beleg WHERE OriginalFileName is null and Ablagecode not like '999999:\'</Sql>
+  </SqlString>
+  <SqlString>
+    <Function>CONVERT_AGAIN</Function>
+    <Sql>SELECT Top 100 Beleg_ID, Seiten, Ablagecode FROM Dyn_Beleg WHERE OriginalFileName is not null and Ablagecode not like '999999:\' and Erfassungsdatum >= '2019-08-01'</Sql>
+  </SqlString>
+  <SqlString>
+    <Function>REPAIR_BELEGSEITEN</Function>
+    <Sql>SELECT Top 100 Beleg_ID, Seiten, Ablagecode FROM Dyn_Beleg WHERE Beleg_ID > 0 AND Ablagecode not like '999999:\'</Sql>
+  </SqlString>
+
+</SqlStrings>
