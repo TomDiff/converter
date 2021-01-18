@@ -26,6 +26,7 @@ namespace SHE_Document_converter.User_Controls
             GetBelege();
         }
 
+        #region GetBelege //vorhanden
         private void GetBelege()
         {
             DataTable table = Database_Data.Instance.ExecuteQuery(tbSQL.Text);
@@ -38,7 +39,9 @@ namespace SHE_Document_converter.User_Controls
             InitGrid(table);
 
         }
+        #endregion
 
+        #region InitGrid
         private void InitGrid(DataTable table)
         {
             if (dgw.InvokeRequired)
@@ -65,27 +68,29 @@ namespace SHE_Document_converter.User_Controls
 
                 SetLabelText("0", 0, table.Rows.Count);
             }
-
         }
+        #endregion
 
+        #region SetLabelText // für alle
         private void SetLabelText(string id, int currentnumber, int totalNumber)
         {
             if (lbInfo.InvokeRequired)
             {
                 if (_slCall == null)
                     _slCall = SetLabelText;
-
+                
                 Invoke(_slCall, id, currentnumber, totalNumber);
             }
             else
                 lbInfo.Text = $@"Aktuelle Beleg (ID): {id} ({currentnumber} von {totalNumber})";
-
-        }
+        } 
+        #endregion
 
         private void btConverter_Click(object sender, EventArgs e)
         {
             StartRecovery();
         }
+
         private void StartRecovery()
         {
             if (dgw.Rows.Count == 0)
@@ -94,7 +99,7 @@ namespace SHE_Document_converter.User_Controls
             btconnect.Enabled = false;
             btConverter.Enabled = false;
             _shouldStop = false;
-            _coverterThread = new Thread(CallRecovery);
+            _coverterThread = new Thread(DoRecovery);
             _coverterThread.Start();
         }
 
@@ -105,7 +110,7 @@ namespace SHE_Document_converter.User_Controls
             _shouldStop = true;
         }
 
-        private void CallRecovery()
+        private void DoRecovery()
         {
             int index = 0;
             foreach (DataGridViewRow row in dgw.Rows)

@@ -27,7 +27,8 @@ namespace Recovery
             }
 
 
-            using (var dt2 = Database_Config.Instance.ExecuteQuery("select schluessel,wert from Frm_Konfiguration where Schluessel like 'Synios.Module.DocumentViewer.Archivpfade%'"))
+            using (var dt2 =
+                Database_Config.Instance.ExecuteQuery("select schluessel,wert from Frm_Konfiguration where Schluessel like 'Synios.Module.DocumentViewer.Archivpfade%'"))
             {
                 if (dt2 != null && dt2.Rows.Count != 0)
                 {
@@ -107,6 +108,7 @@ namespace Recovery
                     var rx2 = new Regex(expre2, RegexOptions.IgnoreCase);
                     foreach (var info in withoutSafe)
                     {
+
                         if (rx1.IsMatch(info.Name))
                             checkfiles.Images.Add(info.Name);
                         else if (rx2.IsMatch(info.Name))
@@ -114,8 +116,8 @@ namespace Recovery
                     }
                 }
 
-               
-               
+
+
                 return checkfiles;
             }
             catch (Exception ex)
@@ -171,6 +173,7 @@ namespace Recovery
                 return settings;
 
             var ablageCode = $"{code[0]}\\{code[1]}\\{code[2]}\\{code[3]}\\{code[4]}";
+
             var sourcePath = GetArchivPath(ablageCode);
 
             if (Directory.Exists(sourcePath) == false)
@@ -243,13 +246,18 @@ namespace Recovery
             var rx = new Regex(expre, RegexOptions.IgnoreCase);
             foreach (var file in files)
             {
-
                 //Test für Löschen von alte Datein
                 if (rx.IsMatch(file.Name))
                     File.Delete(file.FullName);
             }
         }
-
+        /// <summary>
+        /// ///////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// </summary>
+        /// <param name="belegId"></param>
+        /// <param name="ablageCode"></param>
+        /// <param name="seiten"></param>
+        /// <returns></returns>
         public ERecoveryStatus CheckAblageWihtoutOriginal(int belegId, string ablageCode, int seiten)
         {
             try
